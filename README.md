@@ -1,4 +1,4 @@
-# 火车票订票系统作业要求（v5）
+# 火车票订票系统作业要求（v6）
 2018 ACM班 数据结构
 
 ## 概况
@@ -38,7 +38,9 @@
 
 ### 内容分工
 
-对于4人组，**强制要求数据本地存储**、修改的部分由B班同学负责，A班同学可以在思路上给予帮助，但**严禁借抄代码或代写等行为，**希望A班同学能自觉遵守，也给B班同学一个提升的机会，code review时也会采取措施检查这一分工落实。
+对于4人组，**强制要求数据本地存储**、修改的部分由B班同学负责，A班同学可以在思路上给予帮助，
+
+但**严禁借抄代码或代写等行为，**希望A班同学能自觉遵守，也给B班同学一个提升的机会，code review时也会采取措施检查这一分工落实。
 
 对于3人组，**没有任何分工要求**。
 
@@ -84,11 +86,11 @@
 
     `*id*( or -1)`
 
-    - 说明
+  - 说明
 
-      **返回的id由2018开始（含2018），且2018号用户为默认管理员，每次新用户id依次递增**，若注册失败则返回负数
+      **返回的id由2018开始（含2018），且2018号用户为默认管理员，每次新用户id依次递增**，若注册失败则返回-1
 
-    - 样例
+  - 样例
 
       `register 张三 zhangsan zhangsan@sjtu.edu.cn 12345678`
 
@@ -101,6 +103,10 @@
   - 返回值
 
     `0 or 1`
+
+  - 说明
+
+    1为登录成功，0为失败
 
   - 样例
 
@@ -124,7 +130,7 @@
 
     `query_profile 2018`
 
-    `-> 张三 zhangsan@sjtu.edu.cn 12345678`
+    `-> 张三 zhangsan@sjtu.edu.cn 12345678 2`  
 - 修改用户信息
   - 格式
 
@@ -133,6 +139,10 @@
   - 返回值
 
     `0 or 1`
+
+  - 说明
+
+    1为登录成功，0为失败
 
   - 样例
 
@@ -149,6 +159,8 @@
     `0 or 1`
 
   - 说明
+
+    1为成功，0为失败
 
     id1 要将 id2 改为 privilege(>0) 等级
 
@@ -186,6 +198,9 @@
     查询loc1到loc2发车日期为date的catalog类列车
 
     第一行返回查到的票共有多少行，若为-1则说明查询非法；接下来每行代表一张票的相应信息。
+    **按trainid字典序升序输出，所有实数输出绝对或相对误差在$10^{-6}$视为正确(包括下文所有操作)**
+
+    **（special judge）**
 
   - 样例
 
@@ -203,7 +218,7 @@
 
   - 返回值
 
-    `[train_id loc(from) date(from) time(from) loc(to) date(to) time(to) dist [ticket_kind num(ticket_left) price] * num(price) (\n)] * 2`
+    `[train_id loc(from) date(from) time(from) loc(to) date(to) time(to) [ticket_kind num(ticket_left) price] * num(price) (\n)] * 2`
 
     `(or -1)`
 
@@ -211,7 +226,7 @@
 
     查询loc1到loc2发车日期为date的均为catalog类两列车，使得这两列车总时长（含中转等待时间）最短。
 
-    若有多组合法的均为最短时间中转方案，则输出第一辆列车发车更早的那一种。
+    若有多组合法的均为最短时间中转方案，**则随意输出一种即可，spj会验证这点。**
 
     第一行若为-1则说明查询非法；接下来两行代表两张可以用于中转的票务信息。
 
@@ -235,24 +250,26 @@
 
   - 说明
 
+    1为成功，0为失败
+
     用户id 购买 num 张 date 这天的 train_id 这辆车从loc1到loc2的ticket_kind这种票
 
   - 样例
 
-    `buy_ticket 666 1 C101 北京 夏威夷 2018-03-28 一等座`
+    `buy_ticket 6666 1 C101 北京 夏威夷 2018-03-28 一等座`
 
     `-> 1`
 
 - 查询购票信息
 
-  - 格式``
+  - 格式
 
     `query_order *id* *date* *catalog*`
 
   - 返回值
 
     `listnum(\n)`
-    `[train_id loc(from) date(from) time(from) loc(to) date(to) time(to) dist [ticket_kind num(ticket_left) price] * 3 (\n)]*listnum`
+    `[train_id loc(from) date(from) time(from) loc(to) date(to) time(to) dist [ticket_kind num(ticket_left) price] * num(price) (\n)]*listnum`
 
     `(or -1)`
 
@@ -261,10 +278,13 @@
     查询用户id购买的date这天类别为catalog的所有车票
 
     第一行返回查到的票共有多少行，若为-1则说明查询非法；接下来每行代表一张票的相应信息。
+    **输出顺序随意，保证总和正确即可**
 
   - 样例
 
-    `query_order 666 2018-03-28 C`
+    `query_order 6666 2018-03-28 C`
+
+    `-> 1`
 
     `-> c101 北京 2018-03-28 08:00 夏威夷 2018-03-28 08:01 一等座 1 765.50 二等座 0 765.49 三等座 0 765.48`
 
@@ -284,7 +304,7 @@
 
   - 样例
 
-    `refund_ticket 666 1 C101 北京 夏威夷 2018-03-28 一等座`
+    `refund_ticket 6666 1 C101 北京 夏威夷 2018-03-28 一等座`
 
     `-> 1`
 
@@ -335,6 +355,7 @@
     将train_id的车次的车票开放发售
 
     已发售的车次不能再发售（返回0）
+    **注意：已发售的车次不能delete 或 modify**
 
   - 样例
 
@@ -350,13 +371,17 @@
 
   - 返回值
 
-    `train_id name num(station) catalog num(price) (name(price) ) * num(price)`
+    `*train_id* *name* *catalog* *num(station)* *num(price)* *(name(price) ) x num(price)*`
 
-    `*[name time(arriv) time(start) time(stopover) (price) * num(price) ] *num(station)*`
+    `*[name time(arriv) time(start) time(stopover) (price) x num(price) (\n)] x num(station)*`
+
+  - 返回值
 
   - 说明
 
     查询列车号为train_id的列车
+
+    若查询的车次不存在，返回0
 
   - 样例
 
@@ -392,9 +417,9 @@
 
   - 格式
 
-    `modify_train *train_id*  *name* *num(station)* *catalog* *num(price)* *(name(price) ) * num(price)*`
+    `modify_train *train_id*  *name* *catalog* *num(station)* *num(price)* *(name(price) ) x num(price)*`
 
-    `*[name time(arriv) time(start) time(stopover) (price) * num(price) ] *num(station)*`
+    `*[name time(arriv) time(start) time(stopover) (price) * num(price) (\n)] *num(station)*`
 
   - 返回值
 
@@ -445,7 +470,7 @@
 
 - name
 
-  20B以内无空格非空字符串，带中文
+  **40B**以内无空格非空字符串，带中文
 
 - password
 
@@ -596,3 +621,4 @@ HTML, CSS, JS, TCP/IP原理 http://www.w3school.com.cn/index.html
 Bootstrap, Python, Django, Node.js, HTTP原理 http://www.runoob.com/
 
 Flask http://flask.pocoo.org/docs/0.12/
+
