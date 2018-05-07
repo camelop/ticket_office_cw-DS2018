@@ -1,0 +1,6 @@
+query_train 1c000C100205
+delete_train 1c000C100205
+modify_train 1c000C100205 我是火车王 G 2 1 大师座
+北京 xx:xx 08:00 00:00 ￥0.0
+夏威夷 08:02 xx:xx 00:00 ￥1.5
+exit
