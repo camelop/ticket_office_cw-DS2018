@@ -1,0 +1,4 @@
+modify_profile 2018 小黄帽 xiaohuangmao huang@mao.com 54749110
+modify_profile 2020 小黄帽 xiaohuangmao huang@mao.com 54749110
+query_profile 2018
+exit
