@@ -1,0 +1,14 @@
+query_ticket 长春 延吉西 2018-06-01 CD
+query_ticket 长春 延吉西 2018-06-01 G
+register 冯念近 123456 hzfengnj@qq.com 12323332333
+buy_ticket 2018 50 11000C100102 长春 吉林 2018-06-01 软卧
+query_order 2018 2018-06-01 CDG
+refund_ticket 2018 50 1c000C100205 长春 吉林 2018-06-01 软卧
+refund_ticket 2018 51 11000C100102 长春 吉林 2018-06-01 软卧
+refund_ticket 2018 50 11000C100102 长春 石家庄 2018-06-01 软卧
+refund_ticket 2018 50 11000C100102 长春 吉林 2018-06-02 软卧
+refund_ticket 2018 50 11000C100102 长春 吉林 2018-06-01 硬卧
+refund_ticket 2018 49 11000C100102 长春 吉林 2018-06-01 软卧
+query_order 2018 2018-06-01 CDG
+exit
+

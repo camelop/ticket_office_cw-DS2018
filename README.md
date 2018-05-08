@@ -498,9 +498,9 @@
 
 - date
 
-  XXXX-XX-XX
+  xxxx-xx-xx
 
-  默认为X，换为数字，要求补0
+  默认为x，换为数字，要求补0
 
 - catalog
 
@@ -520,9 +520,9 @@
 
 - time
 
-  XX:XX
+  xx:xx
 
-  默认为X，换为数字，要求补0
+  默认为x，换为数字，要求补0
 
 - price
 
