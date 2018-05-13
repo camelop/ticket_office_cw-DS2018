@@ -1,0 +1,21 @@
+register 小红帽 xiaohongmao xiaohongmao@mao.com 12332123212
+login 2018 xiaohongmao
+login 2018 xiaolvmao
+login 2019 xiaohongmao
+exit
+
+query_profile 2018
+query_profile 2019
+exit
+
+modify_profile 2018 小黄帽 xiaohuangmao huang@mao.com 54749110
+modify_profile 2020 小黄帽 xiaohuangmao huang@mao.com 54749110
+query_profile 2018
+exit
+
+register 小紫帽 xiaozimao zi@mao.com 110
+modify_privilege 2018 2018 1
+modify_privilege 2018 2019 2
+clean
+exit
+

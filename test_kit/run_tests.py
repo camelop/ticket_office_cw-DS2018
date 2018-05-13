@@ -36,7 +36,10 @@ def run_test(dir_name):
     copy(join(dir_name,"*"), "tmp")
     if (exists(join("tmp", "readme.txt"))):
         info = "".join(open(join("tmp", "readme.txt"), "r").readlines())
+        while info[-1] == '\n':
+            info = info[:-1]
         print(info)
+        ret['comment'] = info
     
     # prepare program
     global exec_loc
@@ -72,15 +75,18 @@ def run_test(dir_name):
         nw += 1
 
     if "-quite" not in argv:
-        same = os.system("diff -b -B user.out ans.out") # 1>/dev/null")
+        #same = os.system("diff -b -B user.out ans.out") # 1>/dev/null")
+        same = os.system("../spj all.in user.out ans.out 1>/dev/null")
     else:
-        same = os.system("diff -b -B user.out ans.out 1>/dev/null")
+        #same = os.system("diff -b -B user.out ans.out 1>/dev/null")
+        same = os.system("../spj all.in user.out ans.out")
     chdir("..")
 
     ret['time'] = time_used
     print("Time:\t"+str(time_used)+"s")
     ret['space'] = (max_size-pre_size)/1000
     print("Space:\t"+str((max_size-pre_size)/1000)+"K")
+    os.system("cp tmp/user.out your_ans/{}_your_ans.out".format(dir_name))
     if (same == 0):
         ret['state'] = 'accept'
         print("State:\t"+"ACCEPT!")
@@ -100,6 +106,12 @@ def main():
     # test begin
     nw = 1
     result = []
+
+    # create your_ans dir
+    if os.path.exists("your_ans"):
+        os.system("rm -rf your_ans")
+    os.system("mkdir your_ans")
+
     while (os.path.exists(str(nw))):
         bar = "--------------------"
         print(bar+" test {} ".format(str(nw))+bar)
@@ -111,6 +123,21 @@ def main():
         import json
         with open("result.json","w") as f:
             json.dump(result, f)
+
+    if "-quite" not in argv:
+        bar = "--------------------"
+        print(bar+" result: "+bar)
+        print("state\ttime\tspace\tcomment")
+        for r in result:
+            print(str(colored(r['state']))+"\t"+str(round(r['time'],2))+"s\t"+str(round(r['space']/1000,2))+"M\t"+r['comment']) 
+
+def colored(s):
+    if s == 'time limit exceeded':
+        return "\033[0;34mTLE\033[0m"
+    elif s == 'wrong answer':
+        return "\033[0;31mWA\033[0m"
+    else:
+        return "\033[0;32mAC\033[0m" 
 
 if __name__ == "__main__":
     main()
