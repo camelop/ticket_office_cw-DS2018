@@ -38,7 +38,8 @@ def run_test(dir_name):
         info = "".join(open(join("tmp", "readme.txt"), "r").readlines())
         while info[-1] == '\n':
             info = info[:-1]
-        print(info)
+        if "-quite" not in argv:
+            print(info)
         ret['comment'] = info
     
     # prepare program
@@ -59,7 +60,8 @@ def run_test(dir_name):
             +str(nw)+".in"+" 1>> user.out"
         ret_value = os.system(run_command)
         if (ret_value != 0):
-            print("Time out")
+            if "-quite" not in argv:
+                print("Time out")
             ret['state'] = 'time limit exceeded'
             chdir("..")
             return ret
@@ -83,16 +85,19 @@ def run_test(dir_name):
     chdir("..")
 
     ret['time'] = time_used
-    print("Time:\t"+str(time_used)+"s")
     ret['space'] = (max_size-pre_size)/1000
-    print("Space:\t"+str((max_size-pre_size)/1000)+"K")
+    if "-quite" not in argv:
+        print("Time:\t"+str(time_used)+"s")
+        print("Space:\t"+str((max_size-pre_size)/1000)+"K")
     os.system("cp tmp/user.out your_ans/{}_your_ans.out".format(dir_name))
     if (same == 0):
         ret['state'] = 'accept'
-        print("State:\t"+"ACCEPT!")
+        if "-quite" not in argv:
+            print("State:\t"+"ACCEPT!")
     else:
         ret['state'] = 'wrong answer'
-        print("State:\t"+"Failed...")
+        if "-quite" not in argv:
+            print("State:\t"+"Failed...")
 
     return ret
 
@@ -114,9 +119,11 @@ def main():
 
     while (os.path.exists(str(nw))):
         bar = "--------------------"
-        print(bar+" test {} ".format(str(nw))+bar)
+        if "-quite" not in argv:
+            print(bar+" test {} ".format(str(nw))+bar)
         result.append(run_test(str(nw)))
-        print()
+        if "-quite" not in argv:
+            print()
         nw += 1
 
     if "-json" in argv:
