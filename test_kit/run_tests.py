@@ -3,7 +3,7 @@
 import os, sys
 
 exec_loc = "sample"
-time_limit = 100
+time_limit = 40 
 argv = []
 
 def run_test(dir_name):
