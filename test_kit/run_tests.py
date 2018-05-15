@@ -3,7 +3,7 @@
 import os, sys
 
 exec_loc = "sample"
-time_limit = 5
+time_limit = 100
 argv = []
 
 def run_test(dir_name):
@@ -23,8 +23,8 @@ def run_test(dir_name):
     join = os.path.join
 
     ret = {}
-    ret['time'] = ''
-    ret['space'] = ''
+    ret['time'] = -1 
+    ret['space'] = -1
     ret['state'] = 'runtime error'
 
     # clear tmp
@@ -54,7 +54,6 @@ def run_test(dir_name):
 
     nw = 1
     while exists(str(nw)+".in"):
-        
         # run your program!!!
         run_command = "timeout {} /usr/bin/time -o time.txt -f \"%e %s %w %K\" ./{} < ".format(str(time_limit), exec_loc) \
             +str(nw)+".in"+" 1>> user.out"
@@ -69,6 +68,8 @@ def run_test(dir_name):
         # get results
         nw_time_results = open("time.txt", "r").readlines()[0].split()
         nw_time_used = eval(nw_time_results[0])
+        if "-quite" not in argv:
+            print(str(nw)+" finished - "+str(round(nw_time_used,2))+"s")
         time_used += nw_time_used
         remove("time.txt")
         nw_size = getsize("../tmp") - getsize("user.out")
